@@ -7,28 +7,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout Ndless
-        uses: actions/checkout@v4
-        with:
-          repository: ndless-nspire/Ndless
-          path: ndless-sdk
-          submodules: recursive
-          fetch-depth: 1
-
-      - name: Build Ndless SDK
-        run: |
-          cd ndless-sdk
-          make -j2
-
-      - name: Add Ndless tools
-        run: |
-          echo "$GITHUB_WORKSPACE/ndless-sdk/ndless-sdk/bin" >> "$GITHUB_PATH"
+      - name: Set up Ndless
+        uses: Ziyang-Bai/setup-ndless@v1
 
       - name: Build game
         run: make
