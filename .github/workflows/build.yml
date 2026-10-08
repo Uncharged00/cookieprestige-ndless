@@ -13,20 +13,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Ndless SDK
+      - name: Checkout Ndless
+        uses: actions/checkout@v4
+        with:
+          repository: ndless-nspire/Ndless
+          path: ndless-sdk
+          submodules: recursive
+          fetch-depth: 1
+
+      - name: Build Ndless SDK
         run: |
-          git clone --depth 1 https://github.com/ndless-nspire/Ndless.git ndless-sdk
           cd ndless-sdk
           make -j2
 
-      - name: Add Ndless tools to PATH
+      - name: Add Ndless tools
         run: |
           echo "$GITHUB_WORKSPACE/ndless-sdk/ndless-sdk/bin" >> "$GITHUB_PATH"
-          echo "$GITHUB_WORKSPACE/ndless-sdk/ndless-sdk/tools" >> "$GITHUB_PATH"
 
-      - name: Build
-        run: |
-          make
+      - name: Build game
+        run: make
 
       - name: Upload TNS
         uses: actions/upload-artifact@v4
