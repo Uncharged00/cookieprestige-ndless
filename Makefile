@@ -23,16 +23,19 @@ OBJS += $(patsubst %.S, %.o, $(shell find . -name \*.S))
 EXE = cookieprestige
 DISTDIR = .
 
+vpath %.tns $(DISTDIR)
+vpath %.elf $(DISTDIR)
+
 all: $(EXE).tns
 
 %.o: %.c
-	$(GCC) $(GCCFLAGS) -c $<
+	$(GCC) $(GCCFLAGS) -c $< -o $@
 
 %.o: %.cpp
-	$(GXX) $(GCCFLAGS) -c $<
+	$(GXX) $(GCCFLAGS) -c $< -o $@
 
 %.o: %.S
-	$(AS) -c $<
+	$(AS) -c $< -o $@
 
 $(EXE).elf: $(OBJS)
 	mkdir -p $(DISTDIR)
@@ -44,4 +47,4 @@ $(EXE).tns: $(EXE).elf
 	rm $(DISTDIR)/$@.zehn
 
 clean:
-	rm -f *.o $(DISTDIR)/$(EXE).tns $(DISTDIR)/$(EXE).elf $(DISTDIR)/$(EXE).zehn
+	rm -f $(OBJS) $(DISTDIR)/$(EXE).tns $(DISTDIR)/$(EXE).elf $(DISTDIR)/$(EXE).zehn
