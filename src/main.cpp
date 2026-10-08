@@ -10,7 +10,7 @@
 #define H 240
 #define BUILDINGS 20
 #define NORMAL_UPGRADES 30
-#define HEAVENLY_UPGRADES 9
+#define HEAVENLY_UPGRADES 10
 #define ACHIEVEMENTS 20
 #define SAVEFILE "cookieprestige.sav"
 
@@ -285,7 +285,7 @@ static double buildingFactor(int b) {
 static double baseCps() {
     double x = 0.0;
     for (int i=0;i<BUILDINGS;i++)
-        x += buildings[i].owned * buildings[i].baseCps * buildingFactor(i);
+        x += buildings[i].owned * buildings[i].baseCps;
     return x;
 }
 
